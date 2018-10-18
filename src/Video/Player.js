@@ -1,5 +1,7 @@
-import React, { Component } from 'react'
-import videojs from 'video-js'
+import React, { Component, Fragment } from 'react';
+import videojs from 'video.js';
+import 'video.js/dist/video-js.css';
+import Ads from './Ads';
 
 export default class Player extends Component {
   constructor(props) {
@@ -7,9 +9,39 @@ export default class Player extends Component {
     this.state = {}
   }
 
+  componentDidMount() {
+    this.player = videojs(this.videoNode, this.props, () => {
+      // window.player = this.player
+    })
+
+    Ads.setupAds(this.player)
+    this.player.src(src)
+  }
+
+  componentWillUnmount() {
+    this.player.dispose()
+  }
+
   render() {
     return(
-      <div>player</div>
+      <Fragment>
+        <div id="mainContainer">
+          <div id="content" style={{marginTop: "100px"}}>
+            <video 
+              id="contentElement"
+              controls
+              nativecontrolsfortouch="false"
+              className="video-js vjs-scotty vjs-16-9"
+              playsInline
+              ref={ node => this.videoNode = node } 
+              />
+          </div>
+          <div id="adContainer"></div>
+        </div>
+        <button id="playButton">Play</button>
+      </Fragment>
     )
   }
 }
+
+const src = 'https://secure.brightcove.com/services/mobile/streaming/index/master.m3u8?videoId=79608804001&pubId=376817008&secure=true'

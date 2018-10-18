@@ -6,7 +6,7 @@
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-scripts": "2.0.5",
-    "video-js": "^0.7.0"
+    "video.js": "^7.2.3"
   },
   "scripts": {
     "start": "react-scripts start",
